@@ -9,12 +9,13 @@ export const CreateBook = () => {
   const [categories, setCategories] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
   const [submitted, setSubmitted] = useState("");
-  const [image, setImage] = useState(NoImageSelected)
+  const [image, setImage] = useState(NoImageSelected);
 
   const createBook = async (e) => {
     e.preventDefault();
     console.table([title, slug]);
 
+  const serverUrl= import.meta.env.VITE_SERVER_URL;
 
     const formData = new FormData();
     formData.append("title", title);
@@ -26,7 +27,7 @@ export const CreateBook = () => {
 
     try {
 
-      const response = await fetch("http://localhost:8000/api/books", {
+      const response = await fetch(`${serverUrl}/api/books`, {
         method: "POST",
         body: formData,
       });

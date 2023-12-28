@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { number } from "prop-types";
 
 export const SingleBook = () => {
   const [data, setData] = useState([]);
   const urlSlug = useParams();
-  const baseUrl = `http://localhost:8000/api/books/${urlSlug.slug}`;
+  const serverUrl= import.meta.env.VITE_SERVER_URL;
+  const baseUrl = `${serverUrl}/api/books/${urlSlug.slug}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +26,7 @@ export const SingleBook = () => {
     fetchData();
   }, []);
 
-  const StarRating = ({ numberOfStars} ) => {
+  const StarRating = ({ numberOfStars } ) => {
     const stars = [];
 
     for(let i = 0; i < numberOfStars; i++ ) {
@@ -34,6 +36,10 @@ export const SingleBook = () => {
     return <div>Rating: {stars}</div>
   }
 
+  StarRating.propTypes = {
+    numberOfStars: number,
+  }
+
   return (
     <div>
 
@@ -41,7 +47,7 @@ export const SingleBook = () => {
 
     <div className="bookdetails">
       <div className="col-1">
-        <img src={`http://localhost:8000/uploads/${data?.thumbnail}`}
+        <img src={`${serverUrl}/uploads/${data?.thumbnail}`}
         alt={data?.title} />
         <Link to={`/editbook/${data.slug}`}>Edit</Link>
       </div>

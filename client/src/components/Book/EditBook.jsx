@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 export const EditBook = () => {
   const navigate = useNavigate();
   const urlSlug = useParams();
-  const baseUrl = `http://localhost:8000/api/books/${urlSlug.slug}`;
+  const serverUrl= import.meta.env.VITE_SERVER_URL;
+  const baseUrl = `${serverUrl}/api/books/${urlSlug.slug}`;
 
   const [bookId, setBookId] = useState("");
   const [title, setTitle] = useState("");
@@ -56,7 +57,7 @@ export const EditBook = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/books", {
+      const response = await fetch(`${serverUrl}/api/books`, {
         method: "PUT",
         body: formData,
       });
@@ -89,7 +90,7 @@ export const EditBook = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/books/" + bookId,
+        `${serverUrl}/api/books/` + bookId,
         {
           method: "DELETE",
         }
@@ -127,7 +128,7 @@ export const EditBook = () => {
               <img src={`${image}`} alt="preview image" />
             ) : (
               <img
-                src={`http://localhost:8000/uploads/${thumbnail}`}
+                src={`${serverUrl}/uploads/${thumbnail}`}
                 alt="preview image"
               />
             )}
